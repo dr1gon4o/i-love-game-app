@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, redirect } from 'react-router-dom'
 import { registerUser } from '../authentication/authes';
 
 
@@ -21,12 +21,22 @@ export default function Register() {
         if (email.indexOf('@') === -1) {
             return alert('Email must contain @');
         }
+        if (email === '') {
+            return alert('Email is required');
+        }
+        if (password === '') {
+            return alert('Password is required');
+        }
+        if (confirmPassword === '') {
+            return alert('Confirm Password is required');
+        }
 
         try {
             await registerUser(email, password);
 
             alert('Registration successful');
             e.target.reset();
+            redirect('/login');
         } catch (error) {
             alert(error.message);
         }
