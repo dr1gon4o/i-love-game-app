@@ -31,3 +31,4 @@ dist-ssr
 .parcel-cache
 .eslintcache
 vite-cache
+.vscode
