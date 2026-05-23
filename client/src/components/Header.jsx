@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
 
-    const logout = () => localStorage.clear();
+    const logout = () => { localStorage.removeItem("user"); };
+
 
     return (
         <header>
@@ -19,7 +20,7 @@ export default function Header() {
                     <Link to="/create">Add Game</Link>
                     <Link to="/" onClick={logout}>Logout</Link>
                 </div>
-                
+
                 {/* Guest users */}
                 <div id="guest">
                     <Link to="/login">Login</Link>

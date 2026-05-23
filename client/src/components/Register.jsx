@@ -1,10 +1,12 @@
 import React from 'react'
-import { Link, redirect } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { registerUser } from '../authentication/authes';
 
 
 
 export default function Register() {
+
+    const navigate = useNavigate();
 
     const register = async (e) => {
         e.preventDefault();
@@ -33,10 +35,9 @@ export default function Register() {
 
         try {
             await registerUser(email, password);
-
             alert('Registration successful');
             e.target.reset();
-            redirect('/login');
+            navigate('/login');
         } catch (error) {
             alert(error.message);
         }

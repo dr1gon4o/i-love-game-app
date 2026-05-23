@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link, redirect } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { loginUser } from '../authentication/authes';
 
 export default function Login() {
-
+    
+    const navigate = useNavigate();
     // ako e samo s localstorage
     // const users = JSON.parse(localStorage.getItem("users")) || [];
     // const user = users.find(u => u.email === email);
@@ -36,8 +37,9 @@ export default function Login() {
 
         try {
             await loginUser(email, password);
+            alert('Login successful');
             e.target.reset();
-            redirect('/');
+            navigate('/');
         } catch (error) {
             alert(error.message);
         }
@@ -47,7 +49,7 @@ export default function Login() {
         <>
             {/* Login Page ( Only for Guest users ) */}
             <section id="login-page">
-                <form id="login" onSubmit={login()}>
+                <form id="login" onSubmit={login}>
                     <div className="container">
                         <h1>Login</h1>
                         <label htmlFor="email">Email</label>
