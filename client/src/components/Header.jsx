@@ -2,7 +2,12 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
 
-    const logout = () => { localStorage.removeItem("user"); };
+    const logout = () => {
+        localStorage.removeItem("user");
+        window.location.reload();
+    };
+
+    const user = JSON.parse(localStorage.getItem("user"));
 
 
     return (
@@ -16,16 +21,25 @@ export default function Header() {
                 <Link to="/catalog">Catalog</Link>
 
                 {/* Logged-in users */}
-                <div id="user">
-                    <Link to="/create">Add Game</Link>
-                    <Link to="/" onClick={logout}>Logout</Link>
-                </div>
+                {user ? (
+                    <div id="user">
+                        <Link to="/create">Add Game</Link>
+                        <Link to="/" onClick={logout}>Logout</Link>
+                    </div>
+                ) : (
+                    <div id="guest">
+                        <Link to="/login">Login</Link>
+                        <Link to="/register">Register</Link>
+                    </div>
+
+                )}
+
 
                 {/* Guest users */}
-                <div id="guest">
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
-                </div>
+
+
+
+
             </nav>
         </header>
 

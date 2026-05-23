@@ -40,6 +40,8 @@ export default function Login() {
             alert('Login successful');
             e.target.reset();
             navigate('/');
+             window.location.reload();
+            
         } catch (error) {
             alert(error.message);
         }

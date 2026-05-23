@@ -8,22 +8,20 @@ const baseUrl = 'http://localhost:3030';
 // }
 
 export async function loginUser(email, password) {
-    const data = { email, password };
     const res = await fetch(`${baseUrl}/users/login`, {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(email, password)
+        body: JSON.stringify({ email, password })
     });
 
     const data = await res.json();
-
     if (!res.ok) {
         throw new Error(data.message || "Login failed");
     }
 
-    localStorage.setItem("user", JSON.stringify(data, email));
+    localStorage.setItem("user", JSON.stringify(data));
 
-    return res.json();
+    return data;
 }
 
 export async function registerUser(email, password) {
@@ -36,7 +34,7 @@ export async function registerUser(email, password) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || "Registration failed");
 
-    localStorage.setItem("user", JSON.stringify(data,));
+    localStorage.setItem("user", JSON.stringify(data, email));
 
     return data;
 }
