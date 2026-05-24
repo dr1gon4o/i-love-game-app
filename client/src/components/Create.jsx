@@ -1,27 +1,34 @@
 import { postGame } from "../fetches/methods";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 export default function Create() {
 
-    const {id} = useParams();
+    const onCreate = async (e) => {
+        e.preventDefault();
 
-    const [create, setCreate] = useState(null);
+        const formData = new FormData(e.target);
+        const gameData = Object.fromEntries(formData);
 
+        const user = JSON.parse(localStorage.getItem("user"));
 
-    useEffect(() => {
-        postGame(id).then(data => setCreate(data));
-    }, [id]);
+        if (!user?.accessToken) {
+            alert("You are not logged in");
+            return;
+        }
 
-    if (!create) {
-        return <p>Loading...</p>;
-    }
+        try {
+            await postGame(gameData, user.accessToken);
+            alert("Game created!");
+        } catch (err) {
+            alert(err.message);
+        }
+    };
+
 
     return (
         <>
             {/* add Page ( Only for logged-in users ) */}
             <section id="add-page">
-                <form id="add-new-game">
+                <form id="add-new-game" onSubmit={onCreate}>
                     <div className="container">
                         <h1>Add New Game</h1>
                         <div className="form-group-half">
@@ -29,7 +36,7 @@ export default function Create() {
                             <input
                                 type="text"
                                 id="gameName"
-                                name="gameName"
+                                name="title"
                                 placeholder="Enter game title..."
                             />
                         </div>
@@ -47,14 +54,18 @@ export default function Create() {
                             <input
                                 type="number"
                                 id="activePlayers"
-                                name="activePlayers"
+                                name="players"
                                 min={0}
                                 placeholder={0}
                             />
                         </div>
                         <div className="form-group-half">
                             <label htmlFor="releaseDate">Release Date:</label>
-                            <input type="date" id="releaseDate" name="releaseDate" />
+                            <input
+                                type="date"
+                                id="releaseDate"
+                                name="date"
+                            />
                         </div>
                         <div className="form-group-full">
                             <label htmlFor="imageUrl">Image URL:</label>

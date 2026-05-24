@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { editGame, getOneGame } from "../fetches/methods";
 
 export default function Edit() {
+
+    const navigate = useNavigate();
     const { id } = useParams();
 
     const [edit, setEdit] = useState(null);
@@ -25,7 +27,15 @@ export default function Edit() {
 
         const user = JSON.parse(localStorage.getItem("user"));
 
-        await editGame(id, gameData, user.accessToken);
+        // try {
+        //     await editGame(id, gameData, user.accessToken);
+        //     alert("Game edited!");
+        //     navigate('/Details/' + id);
+        // } catch (err) {
+        //     alert(err.message);
+        //     console.log(err);
+        // }
+
     };
 
     return (
@@ -40,7 +50,7 @@ export default function Edit() {
                             <input
                                 type="text"
                                 id="gameName"
-                                name="gameName"
+                                name="title"
                                 placeholder="Enter game title..."
                                 defaultValue={edit.title}
                             />
@@ -60,7 +70,7 @@ export default function Edit() {
                             <input
                                 type="number"
                                 id="activePlayers"
-                                name="activePlayers"
+                                name="players"
                                 min={0}
                                 placeholder={0}
                                 defaultValue={edit.players}
@@ -68,11 +78,12 @@ export default function Edit() {
                         </div>
                         <div className="form-group-half">
                             <label htmlFor="releaseDate">Release Date:</label>
-                            <input 
+                            <input
                                 type="date"
                                 id="releaseDate"
-                                name="releaseDate"
-                                defaultValue={edit.date} />
+                                name="date"
+                                defaultValue={edit.date}
+                            />
                         </div>
                         <div className="form-group-full">
                             <label htmlFor="imageUrl">Image URL:</label>
