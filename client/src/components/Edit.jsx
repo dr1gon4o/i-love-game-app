@@ -27,14 +27,14 @@ export default function Edit() {
 
         const user = JSON.parse(localStorage.getItem("user"));
 
-        // try {
-        //     await editGame(id, gameData, user.accessToken);
-        //     alert("Game edited!");
-        //     navigate('/Details/' + id);
-        // } catch (err) {
-        //     alert(err.message);
-        //     console.log(err);
-        // }
+        try {
+            await editGame(id, gameData, user.accessToken);
+            alert("Game edited!");
+            navigate('/Details/' + id);
+        } catch (err) {
+            alert(err.message);
+            console.log(err);
+        }
 
     };
 
