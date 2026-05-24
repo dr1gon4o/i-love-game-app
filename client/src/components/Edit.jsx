@@ -1,27 +1,38 @@
-import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
-import { editGame } from "../fetches/methods";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { editGame, getOneGame } from "../fetches/methods";
 
 export default function Edit() {
-    const {id} = useParams();
+    const { id } = useParams();
 
     const [edit, setEdit] = useState(null);
 
 
     useEffect(() => {
-        editGame(id).then(data => setEdit(data));
+        getOneGame(id).then(data => setEdit(data));
     }, [id]);
 
     if (!edit) {
         return <p>Loading...</p>;
     }
 
+    const onEdit = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+
+        const gameData = Object.fromEntries(formData);
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        await editGame(id, gameData, user.accessToken);
+    };
 
     return (
         <>
             {/* add Page ( Only for logged-in users ) */}
             <section id="edit-page">
-                <form id="add-new-game">
+                <form id="add-new-game" onSubmit={onEdit}>
                     <div className="container">
                         <h1>Edit Game</h1>
                         <div className="form-group-half">
@@ -31,6 +42,7 @@ export default function Edit() {
                                 id="gameName"
                                 name="gameName"
                                 placeholder="Enter game title..."
+                                defaultValue={edit.title}
                             />
                         </div>
                         <div className="form-group-half">
@@ -40,6 +52,7 @@ export default function Edit() {
                                 id="genre"
                                 name="genre"
                                 placeholder="Enter game genre..."
+                                defaultValue={edit.genre}
                             />
                         </div>
                         <div className="form-group-half">
@@ -50,11 +63,16 @@ export default function Edit() {
                                 name="activePlayers"
                                 min={0}
                                 placeholder={0}
+                                defaultValue={edit.players}
                             />
                         </div>
                         <div className="form-group-half">
                             <label htmlFor="releaseDate">Release Date:</label>
-                            <input type="date" id="releaseDate" name="releaseDate" />
+                            <input 
+                                type="date"
+                                id="releaseDate"
+                                name="releaseDate"
+                                defaultValue={edit.date} />
                         </div>
                         <div className="form-group-full">
                             <label htmlFor="imageUrl">Image URL:</label>
@@ -63,6 +81,7 @@ export default function Edit() {
                                 id="imageUrl"
                                 name="imageUrl"
                                 placeholder="Enter image URL..."
+                                defaultValue={edit.imageUrl}
                             />
                         </div>
                         <div className="form-group-full">
@@ -72,7 +91,7 @@ export default function Edit() {
                                 id="summary"
                                 rows={5}
                                 placeholder="Write a brief summary..."
-                                defaultValue={""}
+                                defaultValue={edit.summary}
                             />
                         </div>
                         <input className="btn submit" type="submit" defaultValue="EDIT GAME" />

@@ -1,4 +1,22 @@
+import { postGame } from "../fetches/methods";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 export default function Create() {
+
+    const {id} = useParams();
+
+    const [create, setCreate] = useState(null);
+
+
+    useEffect(() => {
+        postGame(id).then(data => setCreate(data));
+    }, [id]);
+
+    if (!create) {
+        return <p>Loading...</p>;
+    }
+
     return (
         <>
             {/* add Page ( Only for logged-in users ) */}
