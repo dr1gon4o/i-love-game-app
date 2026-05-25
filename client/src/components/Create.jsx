@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import { postGame } from "../fetches/methods";
 
 export default function Create() {
 
+    const navigate = useNavigate();
     const onCreate = async (e) => {
         e.preventDefault();
 
@@ -18,6 +20,7 @@ export default function Create() {
         try {
             await postGame(gameData, user.accessToken);
             alert("Game created!");
+            navigate('/details/:id');
         } catch (err) {
             alert(err.message);
         }

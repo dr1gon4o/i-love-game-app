@@ -8,7 +8,8 @@ export default function Details() {
     const { id } = useParams();
 
     const navigate = useNavigate();
-    const token = localStorage.getItem('accessToken');
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user?.accessToken;
     const onDelete = async () => {
         const confirm = window.confirm("Are you sure you want to delete this game?");
         if (!confirm) {
@@ -119,7 +120,10 @@ export default function Details() {
                     {/* <Link className="button"
                         to={"/delete"} >Delete
                     </Link> */}
-                    <input className="button bg-danger w-auto" type="button" value="Delete" onClick={onDelete}></input>
+                    {/* <input className="button bg-danger w-auto" type="button" value="Delete" onClick={onDelete}> */}
+                        <Link className="button"
+                            to={`/delete/${details._id}`}>Delete
+                        </Link>
 
                 </div>
                 <div className="details-comments">

@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { deleteGame } from "../fetches/methods";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { deleteGame, getOneGame  } from "../fetches/methods";
 
 export default function Delete() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const token = localStorage.getItem('accessToken');
 
+    const user = JSON.parse(localStorage.getItem("user"));
+    const token = user?.accessToken;
 
+    const [deletee, setDelete] = useState(null);
+    
+    useEffect(() => {
+            getOneGame(id).then(data => setDelete(data));
+        }, [id]);
+    
+        if (!deletee) {
+            return <p>Loading...</p>;
+        }
 
     const onDelete = async () => {
         await deleteGame(id, token);
@@ -22,7 +31,7 @@ export default function Delete() {
                 <form id="add-new-game">
                     <div className="container">
                         <h1>Are you sure you want to delete this game?</h1>
-                        <button className="btn submit bg-danger" onClick={onDelete}>Yes, delete</button>
+                        <button type="button" className="btn submit bg-danger" onClick={onDelete}>Yes, delete</button>
                     </div>
                 </form>
             </section>
