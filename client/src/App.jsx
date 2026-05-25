@@ -24,7 +24,7 @@ function App() {
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/delete" element={<Delete />} />
+        <Route path="/delete/:id" element={<Delete />} />
       </Routes>
 
       <Footer />

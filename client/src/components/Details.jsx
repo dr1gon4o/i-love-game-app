@@ -109,23 +109,26 @@ export default function Details() {
                 </div>
 
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
-                <div className="buttons">
-                    <Link className="button"
-                        to={`/edit/${details._id}`}>Edit
-                    </Link>
-
-                    {/* <Link className="button"
-                    to={`/delete/${details._id}`}>Delete
-                </Link> */}
-                    {/* <Link className="button"
-                        to={"/delete"} >Delete
-                    </Link> */}
-                    {/* <input className="button bg-danger w-auto" type="button" value="Delete" onClick={onDelete}> */}
+                {user && user._id === details._ownerId && (
+                    <div className="buttons">
+                        <Link className="button"
+                            to={`/edit/${details._id}`}>Edit
+                        </Link>
                         <Link className="button"
                             to={`/delete/${details._id}`}>Delete
                         </Link>
+                    </div>
+                )}
+                {/* <div className="buttons">
+                    <Link className="button"
+                        to={`/edit/${details._id}`}>Edit
+                    </Link> */}
+                    {/* <input className="button bg-danger w-auto" type="button" value="Delete" onClick={onDelete}> */}
+                    {/* <Link className="button"
+                        to={`/delete/${details._id}`}>Delete
+                    </Link>
 
-                </div>
+                </div> */}
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
