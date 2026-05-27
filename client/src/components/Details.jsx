@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getComments, getOneGame } from "../fetches/methods";
+import { getComments, getOneGame, postComment } from "../fetches/methods";
 import { deleteGame } from "../fetches/methods";
 import { useNavigate } from "react-router-dom";
 
@@ -20,15 +20,43 @@ export default function Details() {
     };
 
     const [details, setDetails] = useState(null);
+    const [comments, setComments] = useState({});
 
     // tova e nai simple koeto e s fetch ot fiala methods.js
     useEffect(() => {
         getOneGame(id).then(data => setDetails(data));
     }, [id]);
 
+    useEffect(() => {
+        getComments(id).then(data => setComments(data));
+    }, [id]);
+
+
+
+    const onComment = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target);
+        const gameData = Object.fromEntries(formData);
+
+        const user = JSON.parse(localStorage.getItem("user"));
+
+        try {
+            await postComment(gameData, user.accessToken);
+            alert("Comment created!");
+            navigate('/details/:id');
+        } catch (err) {
+            alert(err.message);
+        }
+    };
+
+
+
+
     if (!details) {
         return <p>Loading...</p>;
     }
+
 
     // tova e predi da si napravia funkciite s fetch
     // useEffect(() => {
@@ -41,7 +69,7 @@ export default function Details() {
     //     return <p>Loading...</p>;
     // }
 
-    
+
     // tova e ako iskam da ima try i catch error
     // useEffect(() => {
     //     try {
@@ -71,15 +99,6 @@ export default function Details() {
     // if (!details) {
     //     return <p>Loading...</p>;
     // }
-
-
-    // const [comments, setComments] = useState([]);
-
-    // useEffect(() => {
-    //     getComments(id).then(data => setDetails(data));
-    // }, [id]);
-
-
 
     return (
         <section id="game-details">
@@ -130,14 +149,29 @@ export default function Details() {
                     <Link className="button"
                         to={`/edit/${details._id}`}>Edit
                     </Link> */}
-                    {/* <input className="button bg-danger w-auto" type="button" value="Delete" onClick={onDelete}> */}
-                    {/* <Link className="button"
+                {/* <input className="button bg-danger w-auto" type="button" value="Delete" onClick={onDelete}> */}
+                {/* <Link className="button"
                         to={`/delete/${details._id}`}>Delete
                     </Link>
 
                 </div> */}
                 <div className="details-comments">
                     <h2>Comments:</h2>
+                    <ul>
+                        {comments.length > 0 ? (
+                            comments.map(comment => (
+                                <li className="comment" key={comment._id}>
+                                    <p>
+                                        Content: {comment.comment}
+                                    </p>
+                                </li>
+                            )
+                            )) : (
+                            <p className="no-comment">No comments.</p>
+
+                        )}
+                    </ul>
+
                     <ul>
                         <li className="comment">
                             <p>
@@ -153,13 +187,14 @@ export default function Details() {
                     </ul>
                     {/* Display paragraph: If there are no games in the database */}
                     {/* <p class="no-comment">No comments.</p> */}
+
                 </div>
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
             {user && user._id !== details._ownerId && (
                 <article className="create-comment">
                     <label>Add new comment:</label>
-                    <form className="form">
+                    <form className="form" onSubmit={onComment}>
                         <textarea name="comment" placeholder="Comment......" defaultValue={""} />
                         <input className="btn submit" type="submit" defaultValue="Add Comment" />
                     </form>

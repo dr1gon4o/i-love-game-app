@@ -10,6 +10,7 @@ import Edit from './components/Edit';
 import Login from './components/Login';
 import Register from './components/Register';
 import Delete from './components/Delete';
+import Comments from "./components/Comments";
 
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/delete/:id" element={<Delete />} />
+        <Route path="/comments" element={<Comments />} />
+
       </Routes>
 
       <Footer />

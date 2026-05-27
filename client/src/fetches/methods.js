@@ -97,12 +97,9 @@ export async function deleteGame(id, token) {
 }
 
 
-export async function getComments(id) {
-    const res = await fetch(`${baseUrlCOM}?where=gameId%3D%22${id}%22`, {
-        method: 'GET',
-        headers: { 'X-Authorization': token },
-    });
-
+export async function getComments() {
+    // const res = await fetch(`${baseUrlCOM}?where=gameId%3D%22${id}%22`);
+    const res = await fetch(`${baseUrlCOM}`);
     return res.json();
 }
 

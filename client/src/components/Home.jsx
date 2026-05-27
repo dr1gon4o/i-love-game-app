@@ -7,11 +7,11 @@ export default function Home() {
     const [games, setGames] = useState([]);
 
 
-     useEffect(() => {
-            getAllGames().then(data => setGames(data));
-        }, []);
+    useEffect(() => {
+        getAllGames().then(data => setGames(data));
+    }, []);
 
-    
+
     return (
         <>
             {/*Home Page*/}
@@ -41,9 +41,9 @@ export default function Home() {
                                     </div>
                                 )
                                 )) : (
-                                    <p className="no-articles">No games yet</p>
+                                <p className="no-articles">No games yet</p>
 
-                                )}
+                            )}
                         </div>
 
                     </div>
