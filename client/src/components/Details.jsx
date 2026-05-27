@@ -21,6 +21,14 @@ export default function Details() {
 
     const [details, setDetails] = useState(null);
 
+    // tova e nai simple koeto e s fetch ot fiala methods.js
+    useEffect(() => {
+        getOneGame(id).then(data => setDetails(data));
+    }, [id]);
+
+    if (!details) {
+        return <p>Loading...</p>;
+    }
 
     // tova e predi da si napravia funkciite s fetch
     // useEffect(() => {
@@ -33,16 +41,7 @@ export default function Details() {
     //     return <p>Loading...</p>;
     // }
 
-
-    // tova e nai simple koeto e s fetch ot fiala methods.js
-    useEffect(() => {
-        getOneGame(id).then(data => setDetails(data));
-    }, [id]);
-
-    if (!details) {
-        return <p>Loading...</p>;
-    }
-
+    
     // tova e ako iskam da ima try i catch error
     // useEffect(() => {
     //     try {
@@ -73,6 +72,14 @@ export default function Details() {
     //     return <p>Loading...</p>;
     // }
 
+
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost:3030/data/games?sortBy=_createdOn%20desc')
+            .then(res => res.json())
+            .then(data => setComments(data));
+    }, []);
 
     return (
         <section id="game-details">
@@ -149,13 +156,22 @@ export default function Details() {
                 </div>
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
-            <article className="create-comment">
+            {user && user._id !== details._ownerId && (
+                <article className="create-comment">
+                    <label>Add new comment:</label>
+                    <form className="form">
+                        <textarea name="comment" placeholder="Comment......" defaultValue={""} />
+                        <input className="btn submit" type="submit" defaultValue="Add Comment" />
+                    </form>
+                </article>
+            )}
+            {/* <article className="create-comment">
                 <label>Add new comment:</label>
                 <form className="form">
                     <textarea name="comment" placeholder="Comment......" defaultValue={""} />
                     <input className="btn submit" type="submit" defaultValue="Add Comment" />
                 </form>
-            </article>
+            </article> */}
         </section >
     );
 }
