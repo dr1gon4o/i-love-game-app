@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getAllGames } from "../fetches/methods";
 
 export default function Catalog() {
     // const haha = fetch('http://localhost:3030/data')
@@ -13,10 +14,14 @@ export default function Catalog() {
     const [games, setGames] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:3030/data/games?sortBy=_createdOn%20desc')
-            .then(res => res.json())
-            .then(data => setGames(data));
+        getAllGames().then(data => setGames(data));
     }, []);
+    
+    // useEffect(() => {
+    //     fetch('http://localhost:3030/data/games?sortBy=_createdOn%20desc')
+    //         .then(res => res.json())
+    //         .then(data => setGames(data));
+    // }, []);
 
     // ili moje taka:
 

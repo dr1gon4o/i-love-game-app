@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getAllGames } from "../fetches/methods";
 
 export default function Home() {
 
-    const [details, setDetails] = useState([]);
+    const [games, setGames] = useState([]);
 
-    useEffect(() => {
-        fetch('http://localhost:3030/data/games?sortBy=_createdOn%20desc')
-            .then(res => res.json())
-            .then(data => setDetails(data));
-    }, []);
 
+     useEffect(() => {
+            getAllGames().then(data => setGames(data));
+        }, []);
+
+    
     return (
         <>
             {/*Home Page*/}
@@ -25,8 +26,8 @@ export default function Home() {
                     <div id="latest-wrap">
                         {/* Display div: with information about every game (if any) */}
                         <div className="home-container">
-                            {details.length > 0 ? (
-                                details.map(game => (
+                            {games.length > 0 ? (
+                                games.map(game => (
 
                                     <div className="game" key={game._id}>
                                         <img src={game.imageUrl} alt={game.title} />

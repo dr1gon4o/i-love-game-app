@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getOneGame } from "../fetches/methods";
+import { getComments, getOneGame } from "../fetches/methods";
 import { deleteGame } from "../fetches/methods";
 import { useNavigate } from "react-router-dom";
 
@@ -73,13 +73,13 @@ export default function Details() {
     // }
 
 
-    const [comments, setComments] = useState([]);
+    // const [comments, setComments] = useState([]);
 
-    useEffect(() => {
-        fetch('http://localhost:3030/data/games?sortBy=_createdOn%20desc')
-            .then(res => res.json())
-            .then(data => setComments(data));
-    }, []);
+    // useEffect(() => {
+    //     getComments(id).then(data => setDetails(data));
+    // }, [id]);
+
+
 
     return (
         <section id="game-details">

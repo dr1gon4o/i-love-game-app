@@ -38,7 +38,7 @@ const baseUrlCOM = 'http://localhost:3030/data/comments';
 // }
 
 export async function getAllGames() {
-    const res = await fetch(baseUrl);
+    const res = await fetch(`${baseUrl}?sortBy=_createdOn%20desc`);
     return res.json();
 }
 
