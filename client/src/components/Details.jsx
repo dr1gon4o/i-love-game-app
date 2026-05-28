@@ -41,6 +41,8 @@ export default function Details() {
 
         const user = JSON.parse(localStorage.getItem("user"));
 
+        gameData.gameId = id;
+
         try {
             await postComment(gameData, user.accessToken);
             alert("Comment created!");

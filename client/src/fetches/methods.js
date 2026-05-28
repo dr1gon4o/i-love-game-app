@@ -97,9 +97,15 @@ export async function deleteGame(id, token) {
 }
 
 
-export async function getComments() {
-    // const res = await fetch(`${baseUrlCOM}?where=gameId%3D%22${id}%22`);
-    const res = await fetch(`${baseUrlCOM}`);
+// export async function getComments() {
+//     // const res = await fetch(`${baseUrlCOM}?where=gameId%3D%22${id}%22`);
+//     const res = await fetch(`${baseUrlCOM}`);
+//     return res.json();
+// }
+
+export async function getComments(gameId) {
+    const res = await fetch(`${baseUrlCOM}?where=gameId%3D%22${gameId}%22`);
+    // const res = await fetch(`${baseUrlCOM}`);
     return res.json();
 }
 
