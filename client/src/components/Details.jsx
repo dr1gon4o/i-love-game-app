@@ -147,16 +147,7 @@ export default function Details() {
                         </Link>
                     </div>
                 )}
-                {/* <div className="buttons">
-                    <Link className="button"
-                        to={`/edit/${details._id}`}>Edit
-                    </Link> */}
-                {/* <input className="button bg-danger w-auto" type="button" value="Delete" onClick={onDelete}> */}
-                {/* <Link className="button"
-                        to={`/delete/${details._id}`}>Delete
-                    </Link>
-
-                </div> */}
+                
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
@@ -174,22 +165,6 @@ export default function Details() {
                         )}
                     </ul>
 
-                    <ul>
-                        <li className="comment">
-                            <p>
-                                Content: A masterpiece of world design, though the boss fights are
-                                brutal.
-                            </p>
-                        </li>
-                        <li className="comment">
-                            <p>
-                                Content: Truly feels like a next-gen evolution of the Souls formula!
-                            </p>
-                        </li>
-                    </ul>
-                    {/* Display paragraph: If there are no games in the database */}
-                    {/* <p class="no-comment">No comments.</p> */}
-
                 </div>
             </div>
             {/* Add Comment ( Only for logged-in users, which is not creators of the current game ) */}
@@ -202,13 +177,6 @@ export default function Details() {
                     </form>
                 </article>
             )}
-            {/* <article className="create-comment">
-                <label>Add new comment:</label>
-                <form className="form">
-                    <textarea name="comment" placeholder="Comment......" defaultValue={""} />
-                    <input className="btn submit" type="submit" defaultValue="Add Comment" />
-                </form>
-            </article> */}
         </section >
     );
 }
